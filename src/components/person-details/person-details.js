@@ -9,12 +9,12 @@ export default class PersonDetails extends Component {
   swapiService = new SwapiService()
   state = {
     person: null,
-    lodaing: false
+    loading: false
   }
   componentDidMount() {
     this.updatePerson()
     this.setState({
-      lodaing: false
+      loading: false
     })
   }
   componentDidUpdate(prevProps) {
@@ -22,19 +22,19 @@ export default class PersonDetails extends Component {
   }
   updatePerson() {
     this.setState({
-      lodaing: true
+      loading: true
     })
     const {personId} = this.props
     if (!personId) return
     this.swapiService
       .getPerson(personId)
       .then((person) => {
-        this.setState({person, lodaing: false})
+        this.setState({person, loading: false})
       })
   }
   render() {
     const person = this.state.person
-    const loading = this.state.lodaing
+    const loading = this.state.loading
     const loadingSpinner = loading ? <Spinner /> : null
     const content = (person && !loading) ? <PersonView person={person}/> : null
     const selectPerson = (!person && !loading) ? <span>Select a person from a List</span> : null
